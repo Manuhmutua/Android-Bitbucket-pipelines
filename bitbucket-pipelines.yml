@@ -1,4 +1,4 @@
-image: mingc/android-build-box:latest
+image: uber/android-build-environment:latest
 
 pipelines:
   default:
