@@ -23,6 +23,6 @@ pipelines:
                         # Setup the following enviroment variables on bitbucket pipelines  &
                         # SLACK_TOKEN - Obtain this token from: https://api.slack.com/custom-integrations/legacy-tokens
                         # SLACK_CHANNEL - Channel name to upload the file.
-            - curl -F file=@"./app/build/outputs/apk/app-debug.apk" -F channels=${SLACK_CHANNEL} -F token=${SLACK_TOKEN} https://slack.com/api/files.upload
+            - curl -F file=@"./build/outputs/apk/app-debug.apk" -F channels=${SLACK_CHANNEL} -F token=${SLACK_TOKEN} https://slack.com/api/files.upload
                         ##########  UPLOAD A CHANGELOG POST TO SLACK #CHANNEL ##########
             - curl -F content="---Uploaded by bitbucket pipelines, Pending manual edit---" -F filetype=post -F title="$FILE_TITLE CHANGELOG $BUILD_DATE" -F channels=${SLACK_CHANNEL} -F token=${SLACK_TOKEN} https://slack.com/api/files.upload
