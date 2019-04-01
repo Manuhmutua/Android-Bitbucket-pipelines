@@ -1,12 +1,16 @@
-image: mingc/android-build-box:latest
+image: uber/android-build-environment:latest
 
 pipelines:
   default:
     - step:
         script:
-            - chmod +x gradlew
+           # Add Android SDK license in a default file
+            - mkdir "${ANDROID_HOME}/licenses" || true
+            - echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > $ANDROID_HOME/licenses/android-sdk-license
+            - echo "d56f5187479451eabf01fb78af6dfcb131a6481e" > $ANDROID_HOME/licenses/android-sdk-license
+
+            # Build the app
             - ./gradlew assembleDebug
-            - . ./setup_export.sh
             ##########  UPLOAD APK TO SLACK #CHANNEL ##########
             # Setup the following enviroment variables on bitbucket pipelines  & 
             # SLACK_TOKEN - Obtain this token from: https://api.slack.com/custom-integrations/legacy-tokens
