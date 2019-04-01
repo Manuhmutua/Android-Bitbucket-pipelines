@@ -2,8 +2,8 @@ image: uber/android-build-environment:latest
 
 pipelines:
   default:
-    — step:
-      script:
-          — ./build.sh
-          - curl -F file=@"./app/build/outputs/apk/$FILE_NAME" -F channels=${SLACK_CHANNEL} -F token=${SLACK_TOKEN} https://slack.com/api/files.upload
-          - curl -F content="---Uploaded by bitbucket pipelines, Pending manual edit---" -F filetype=post -F title="$FILE_TITLE CHANGELOG $BUILD_DATE" -F channels=${SLACK_CHANNEL} -F token=${SLACK_TOKEN} https://slack.com/api/files.upload
+    - step:
+        script:
+            - ./build.sh
+            - curl -F file=@"./app/build/outputs/apk/$FILE_NAME" -F channels=${SLACK_CHANNEL} -F token=${SLACK_TOKEN} https://slack.com/api/files.upload
+            - curl -F content="---Uploaded by bitbucket pipelines, Pending manual edit---" -F filetype=post -F title="$FILE_TITLE CHANGELOG $BUILD_DATE" -F channels=${SLACK_CHANNEL} -F token=${SLACK_TOKEN} https://slack.com/api/files.upload
