@@ -1,16 +1,26 @@
-image: mingc/android-build-box:latest
+image: java:8
 
 pipelines:
   default:
     - step:
-        script:
-            - chmod +x gradlew
+    caches:
+    - gradle
+    - android-sdk
+         script:
+            - wget --quiet --output-document=android-sdk.zip https://dl.google.com/android/repository/sdk-tools-linux-3859397.zip
+            - unzip -o -qq android-sdk.zip -d android-sdk
+            - export ANDROID_HOME="/opt/atlassian/pipelines/agent/build/android-sdk"
+            - export PATH="$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH"
+            - yes | sdkmanager "platform-tools"
+            - yes | sdkmanager "platforms;android-28"
+            - yes | sdkmanager "build-tools;28.0.3"
+            - yes | sdkmanager "extras;android;m2repository"
+            - yes | sdkmanager "extras;google;m2repository"
+            - yes | sdkmanager "extras;google;instantapps"
+            - yes | sdkmanager --licenses
+            - chmod a+x ./gradlew
+            - chmod +x deploy-hockey.sh
             - ./gradlew assembleDebug
-            - . ./setup_export.sh
-            ##########  UPLOAD APK TO SLACK #CHANNEL ##########
-            # Setup the following enviroment variables on bitbucket pipelines  & 
-            # SLACK_TOKEN - Obtain this token from: https://api.slack.com/custom-integrations/legacy-tokens
-            # SLACK_CHANNEL - Channel name to upload the file. 
-            - curl -F file=@"./app/build/outputs/apk/app-debug.apk" -F channels=${SLACK_CHANNEL} -F token=${SLACK_TOKEN} https://slack.com/api/files.upload
-            ##########  UPLOAD A CHANGELOG POST TO SLACK #CHANNEL ##########
-            - curl -F content="---Uploaded by bitbucket pipelines, Pending manual edit---" -F filetype=post -F title="$FILE_TITLE CHANGELOG $BUILD_DATE" -F channels=${SLACK_CHANNEL} -F token=${SLACK_TOKEN} https://slack.com/api/files.upload
+  definitions:
+    caches:
+    android-sdk: android-sdk
