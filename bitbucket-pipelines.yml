@@ -1,11 +1,10 @@
-image: uber/android-build-environment:latest
+image: mingc/android-build-box:latest
 
 pipelines:
   default:
     - step:
         script:
-            - mkdir "${ANDROID_HOME}/licenses" || true
-            - echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > "${ANDROID_HOME}/licenses/android-sdk-license"
+            - chmod +x gradlew
             - ./gradlew assembleDebug
             - . ./setup_export.sh
             ##########  UPLOAD APK TO SLACK #CHANNEL ##########
