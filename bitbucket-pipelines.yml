@@ -16,7 +16,7 @@ pipelines:
             - yes | sdkmanager "extras;google;instantapps"
             - yes | sdkmanager --licenses
             - chmod a+x ./gradlew
-            - chmod +x deploy-hockey.sh
+            - chmod +x setup_export.sh
             - ./gradlew assembleDebug
             - . ./setup_export.sh
                         ##########  UPLOAD APK TO SLACK #CHANNEL ##########
