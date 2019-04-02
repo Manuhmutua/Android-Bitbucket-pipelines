@@ -1,4 +1,4 @@
-image: manuhmutua/android-build
+image: manuhmutua/android-pipeline
 
 pipelines:
   default:
