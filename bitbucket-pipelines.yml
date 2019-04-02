@@ -11,9 +11,6 @@ pipelines:
             - echo "d56f5187479451eabf01fb78af6dfcb131a6481e" >> "${ANDROID_HOME}/licenses/android-sdk-license"
             - ./gradlew assembleDebug
             - . ./setup_export.sh
-            ##########  UPLOAD APK TO BITBUCKET DOWNLOADS ##########
-            # Instructions to setup the next line. https://confluence.atlassian.com/bitbucket/deploy-build-artifacts-to-bitbucket-downloads-872124574.html
-            - curl -X POST --user "${BB_AUTH_STRING}" "https://api.bitbucket.org/2.0/repositories/${BITBUCKET_REPO_OWNER}/${BITBUCKET_REPO_SLUG}/downloads" --form files=@"${LATEST_APK}"
             ##########  UPLOAD APK TO SLACK #CHANNEL ##########
             # Setup the following enviroment variables on bitbucket pipelines  & 
             # SLACK_TOKEN - Obtain this token from: https://api.slack.com/custom-integrations/legacy-tokens
